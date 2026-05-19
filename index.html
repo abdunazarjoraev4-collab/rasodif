@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background: #121212;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      .list {
+        display: flex;
+        list-style: none;
+        justify-content: center;
+        padding: 0;
+        gap: 10px;
+        margin: 20px 0 0;
+      }
+
+      .list li {
+        font-size: 36px;
+        animation: rotate 2s linear infinite;
+      }
+
+      .range {
+        width: 260px;
+        margin: 0 auto;
+      }
+
+      .click {
+        margin-top: 16px;
+        padding: 10px 18px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #1e88e5;
+        color: #fff;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(1080deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input type="range" min="1" max="6" class="range" value="3" />
+      <ul class="list"></ul>
+      <button class="click">click</button>
+    </div>
+
+    <script>
+      let zarralar = ["O", "D", "E", "U", "B", "R"];
+      let randomZar = [];
+
+      const range = document.querySelector(".range");
+      const list = document.querySelector(".list");
+      const click = document.querySelector(".click");
+      let counter = 0;
+
+      function update() {
+        list.innerHTML = "";
+        randomZar.forEach((el) => {
+          let li = document.createElement("li");
+          li.innerHTML = zarralar[el];
+          list.appendChild(li);
+        });
+      }
+
+      range.oninput = () => {
+        let value = range.value;
+        list.innerHTML = "";
+        counter = value;
+
+        for (let i = 0; i < value; i++) {
+          let li = document.createElement("li");
+          li.innerHTML = zarralar[i];
+          list.appendChild(li);
+        }
+      };
+
+      click.onclick = () => {
+        randomZar = [];
+        for (let i = 0; i < counter; i++) {
+          randomZar.push(Math.floor(Math.random() * 6));
+        }
+        update();
+        console.log(randomZar);
+      };
+
+      range.dispatchEvent(new Event("input"));
+    </script>
+  </body>
+</html>
